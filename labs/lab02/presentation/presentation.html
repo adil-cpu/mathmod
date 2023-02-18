@@ -1,0 +1,154 @@
+<h1 id="информация">Информация</h1>
+<h2 id="докладчик">Докладчик</h2>
+<div class="columns" data-align="center">
+<div class="column" style="width:70%;">
+<ul>
+<li>Мухамедияр Адиль</li>
+<li>студент группы НКНбд-01-20</li>
+<li>Факультет физико-математических и естественных наук</li>
+<li>Российский университет дружбы народов</li>
+<li>&lt;<a href="https://github.com/adil-cpu"
+class="uri">https://github.com/adil-cpu</a>&gt;</li>
+</ul>
+</div>
+</div>
+<h1 id="вводная-часть">Вводная часть</h1>
+<h2 id="актуальность">Актуальность</h2>
+<ul>
+<li>Решение задачи о погоне позволяет определить наилучшую траекторию
+для перехвата.</li>
+<li>Таким образом повышаются навыки владения языком программирования
+Julia.</li>
+</ul>
+<h2 id="объект-и-предмет-исследования">Объект и предмет
+исследования</h2>
+<ul>
+<li>Задача о погоне</li>
+<li>Язык программирования Julia</li>
+</ul>
+<h2 id="цели-и-задачи">Цели и задачи</h2>
+<ul>
+<li>Решить задачу о погоне с определенными входными данными</li>
+<li>Овладеть языком программирования Julia</li>
+<li>Построить график траектории движения катера в полярных
+координатах</li>
+</ul>
+<h1 id="содержание-лабораторной-работы">Содержание лабораторной
+работы</h1>
+<h2 id="постановка-задачи">Постановка задачи</h2>
+<p>На море в тумане катер береговой охраны преследует лодку браконьеров.
+Через определенный промежуток времени туман рассеивается, и лодка
+обнаруживается на расстоянии 6,3 км от катера. Затем лодка снова
+скрывается в тумане и уходит прямолинейно в неизвестном направлении.
+Известно, что скорость катера в 2,3 раза больше скорости браконьерской
+лодки. 1. Запишите уравнение, описывающее движение катера, с начальными
+условиями для двух случаев (в зависимости от расположения катера
+относительно лодки в начальный момент времени). 2. Постройте траекторию
+движения катера и лодки для двух случаев. 3. Найдите точку пересечения
+траектории катера и лодки3.</p>
+<h2 id="решение-задачи-и-формулы.">Решение задачи и формулы.</h2>
+<p>Первый случай: θ = 0</p>
+<p>X1/v = (k - x) / N * v → x1 = k/(N+1) → x1 = 6.3/3.3 = 1.909</p>
+<p>Второй случай: θ = -π</p>
+<p>X2/v = (k - x2) / N * v → x2 = k/(N-1) → x2 = 6.3/1.3 = 4.846</p>
+<p>Vt = sqrt((N<em>v)^2 - v^2) = sqrt(N^2 - 1)</em>v = sqrt(4.29) * v →
+dr/dθ = r/sqrt(4.2</p>
+<h1 id="решение-программными-средствами">Решение программными
+средствами</h1>
+<h2 id="подключение-библиотек-и-код-решения-задачи">Подключение
+библиотек и код решения задачи</h2>
+<p>Установка библиотек: - import Pkg; Pkg.add(“PyPlot”) - import Pkg;
+Pkg.add(“DifferentialEquations”)</p>
+<p>Код для 1 случая:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DifferentialEquations;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">PyPlot;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> x1 <span class="op">=</span> <span class="fl">6.3</span><span class="op">/</span><span class="fl">3.3</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> x2 <span class="op">=</span> <span class="fl">6.3</span><span class="op">/</span><span class="fl">1.3</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> T <span class="op">=</span> (<span class="fl">0</span>, <span class="fl">5</span>pi)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">myfunction</span>(u, p, T)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> u<span class="op">/</span><span class="fu">sqrt</span>(<span class="fl">4.29</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>q1  <span class="op">=</span> <span class="fu">ODEProblem</span>(myfunction, x1, T)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>q2 <span class="op">=</span> <span class="fu">ODEProblem</span>(myfunction, x2, T)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>s1 <span class="op">=</span> <span class="fu">solve</span>(q1,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a> abstol<span class="op">=</span><span class="fl">1e-8</span>, </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a> reltol<span class="op">=</span><span class="fl">1e-8</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>s2 <span class="op">=</span> <span class="fu">solve</span>(q2,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a> abstol<span class="op">=</span><span class="fl">1e-8</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  reltol<span class="op">=</span><span class="fl">1e-8</span>);</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">polar</span>(s1.t, s1.u <span class="op">+</span> <span class="fu">fill</span>(x1, <span class="fl">20</span>))</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">polar</span>(<span class="fu">fill</span>(<span class="op">-</span><span class="fl">1.5</span>, <span class="fl">11</span>), <span class="fu">collect</span>(<span class="fl">0</span><span class="op">:</span> <span class="fl">10</span><span class="op">:</span> <span class="fl">50</span>))</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="fu">polar</span>(s2.t, s2.u <span class="op">+</span> <span class="fu">fill</span>(x2, <span class="fl">32</span>))</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;FirstCase&quot;</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">xlabel</span>(<span class="st">&quot;x&quot;</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="fu">polar</span>(<span class="fu">fill</span>(<span class="op">-</span><span class="fl">1.5</span>, <span class="fl">11</span>), <span class="fu">collect</span>(<span class="fl">0</span><span class="op">:</span> <span class="fl">10</span><span class="op">:</span> <span class="fl">100</span>))</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">ylabel</span>(<span class="st">&quot;y&quot;</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="fu">savefig</span>(<span class="st">&quot;First_pic.jpg&quot;</span>)</span></code></pre></div>
+<h2 id="вывод-графика-для-первого-случая">Вывод графика для первого
+случая</h2>
+<p>Код для 2 случая:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DifferentialEquations;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">PyPlot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> x1 <span class="op">=</span> <span class="fl">6.3</span><span class="op">/</span><span class="fl">3.3</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> x2 <span class="op">=</span> <span class="fl">6.3</span><span class="op">/</span><span class="fl">1.3</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> T <span class="op">=</span> (<span class="op">-</span><span class="cn">pi</span>, <span class="fl">5</span>pi)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">myfunction</span>(u, p, T)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> u<span class="op">/</span><span class="fu">sqrt</span>(<span class="fl">4.29</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>q1  <span class="op">=</span> <span class="fu">ODEProblem</span>(myfunction, x1, T)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>q2 <span class="op">=</span> <span class="fu">ODEProblem</span>(myfunction, x2, T)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>s1 <span class="op">=</span> <span class="fu">solve</span>(q1,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a> abstol<span class="op">=</span><span class="fl">1e-8</span>, </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a> reltol<span class="op">=</span><span class="fl">1e-8</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>s2 <span class="op">=</span> <span class="fu">solve</span>(q2,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a> abstol<span class="op">=</span><span class="fl">1e-8</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  reltol<span class="op">=</span><span class="fl">1e-8</span>);</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">polar</span>(s1.t, s1.u <span class="op">+</span> <span class="fu">fill</span>(x1, <span class="fl">20</span>))</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">polar</span>(<span class="fu">fill</span>(<span class="op">-</span><span class="fl">1.5</span>, <span class="fl">11</span>), <span class="fu">collect</span>(<span class="fl">0</span><span class="op">:</span> <span class="fl">10</span><span class="op">:</span> <span class="fl">50</span>))</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="fu">polar</span>(s2.t, s2.u <span class="op">+</span> <span class="fu">fill</span>(x2, <span class="fl">32</span>))</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;SecondCase&quot;</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="fu">xlabel</span>(<span class="st">&quot;x&quot;</span>)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="fu">polar</span>(<span class="fu">fill</span>(<span class="op">-</span><span class="fl">1.5</span>, <span class="fl">11</span>), <span class="fu">collect</span>(<span class="fl">0</span><span class="op">:</span> <span class="fl">10</span><span class="op">:</span> <span class="fl">100</span>))</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="fu">ylabel</span>(<span class="st">&quot;y&quot;</span>)</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="fu">savefig</span>(<span class="st">&quot;Second_pic.jpg&quot;</span>)</span></code></pre></div>
+<h1 id="результаты">Результаты</h1>
+<h2 id="траектория-катера-в-первом-случае">Траектория катера в первом
+случае</h2>
+<figure id="fig:001">
+<img src="../img/First_pic.jpg" style="width:70.0%"
+alt="“Результат 1 случая”" />
+<figcaption aria-hidden="true">“Результат 1 случая”</figcaption>
+</figure>
+<h2 id="траектория-катера-во-втором-случае">Траектория катера во втором
+случае</h2>
+<figure id="fig:002">
+<img src="../img/Second_pic.jpg" style="width:70.0%"
+alt="“Результат 2 случая”" />
+<figcaption aria-hidden="true">“Результат 2 случая”</figcaption>
+</figure>
+<h2 id="вывод">Вывод</h2>
+<p>В моем случае ответы 1 и 2 вариантов решений(когда θ = 0 и θ = -π)
+вышли одинаковыми. Так же научился решать подобные задачи на языке
+программирования Julia.</p>
